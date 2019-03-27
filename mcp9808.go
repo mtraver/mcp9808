@@ -85,7 +85,7 @@ func (m *MCP9808) ReadTemp() (float32, error) {
 	}
 
 	temp := float32(regVal&0x0fff) / 16.0
-	if regVal&0x1000 == 1 {
+	if regVal&0x1000 > 0 {
 		temp -= 256.0
 	}
 
