@@ -78,7 +78,8 @@ func (m *MCP9808) ReadUint16(reg byte) (uint16, error) {
 	return binary.BigEndian.Uint16(b), nil
 }
 
-func regToCelsius(regVal uint16) float32 {
+func tempRegisterToCelsius(regVal uint16) float32 {
+	// The temp register uses two's complement. See pages 24-25 of the datasheet.
 	temp := float32(regVal&0x0fff) / 16.0
 	if regVal&0x1000 > 0 {
 		temp -= 256.0
@@ -93,5 +94,5 @@ func (m *MCP9808) ReadTemp() (float32, error) {
 		return 0, fmt.Errorf("mcp9808: error reading temp: %v", err)
 	}
 
-	return regToCelsius(regVal), nil
+	return tempRegisterToCelsius(regVal), nil
 }
