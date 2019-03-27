@@ -78,16 +78,20 @@ func (m *MCP9808) ReadUint16(reg byte) (uint16, error) {
 	return binary.BigEndian.Uint16(b), nil
 }
 
+func regToCelsius(regVal uint16) float32 {
+	temp := float32(regVal&0x0fff) / 16.0
+	if regVal&0x1000 > 0 {
+		temp -= 256.0
+	}
+
+	return temp
+}
+
 func (m *MCP9808) ReadTemp() (float32, error) {
 	regVal, err := m.ReadUint16(regTemp)
 	if err != nil {
 		return 0, fmt.Errorf("mcp9808: error reading temp: %v", err)
 	}
 
-	temp := float32(regVal&0x0fff) / 16.0
-	if regVal&0x1000 > 0 {
-		temp -= 256.0
-	}
-
-	return temp, nil
+	return regToCelsius(regVal), nil
 }
