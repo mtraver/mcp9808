@@ -34,7 +34,7 @@ type MCP9808 struct {
 	device *i2c.Device
 }
 
-func NewMCP9808() (*MCP9808, error) {
+func New() (*MCP9808, error) {
 	d, err := i2c.Open(&i2c.Devfs{Dev: devPath}, defaultI2CAddr)
 	if err != nil {
 		return nil, fmt.Errorf("mcp9808: %v", err)
