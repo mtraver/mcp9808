@@ -1,5 +1,8 @@
 // Package mcp9808 provides an interface to the MCP9808 temperature sensor.
 // Datasheet: http://ww1.microchip.com/downloads/en/DeviceDoc/25095A.pdf
+//
+// Deprecated: Use https://periph.io instead. As of 2019-04-02, MCP9808 support
+// is in package "periph.io/x/periph/experimental/devices/mcp9808".
 package mcp9808
 
 import (
